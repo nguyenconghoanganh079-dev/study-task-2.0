@@ -1,0 +1,330 @@
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#edf6ff">
+  <title>StudyTask</title> 
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <div class="app">
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-icon">✦</div>
+        <div>
+          <div class="brand-name">StudyTask</div>
+          <div class="brand-subtitle">Your personal study space</div>
+        </div>
+      </div>
+
+      <button class="theme-btn" id="theme-toggle" type="button">
+        🌙 Chế độ tối
+      </button>
+    </header>
+
+    <nav class="page-nav" aria-label="Điều hướng chính">
+      <button class="page-nav-btn active" type="button" data-page="home-page" aria-current="page">⌂ Trang chủ</button>
+      <button class="page-nav-btn" type="button" data-page="study-stats-page">↗ Thống kê học tập</button>
+    </nav>
+
+    <section class="app-page active" id="home-page">
+    <section class="welcome">
+      <div>
+        <div class="eyebrow">A LITTLE PROGRESS EVERY DAY</div>
+        <h1>Chào em, hôm nay học gì? ☁️</h1>
+        <p>Từng bước nhỏ, tiến bộ mỗi ngày.</p>
+      </div>
+      <div class="date-pill" id="current-date"></div>
+    </section>
+
+    <section class="stats">
+      <article class="stat-card">
+        <div class="stat-top">
+          <span>Tổng nhiệm vụ</span>
+          <span class="stat-icon">📚</span>
+        </div>
+        <div class="stat-number" id="total-tasks">0</div>
+        <div class="stat-note">Tất cả bài tập của em</div>
+      </article>
+
+      <article class="stat-card">
+        <div class="stat-top">
+          <span>Đã hoàn thành</span>
+          <span class="stat-icon">✓</span>
+        </div>
+        <div class="stat-number" id="completed-tasks">0</div>
+        <div class="stat-note">Những việc em đã làm xong</div>
+      </article>
+
+      <article class="stat-card">
+        <div class="stat-top">
+          <span>Còn lại</span>
+          <span class="stat-icon">◷</span>
+        </div>
+        <div class="stat-number" id="remaining-tasks">0</div>
+        <div class="stat-note">Cứ từng bước một nhé!</div>
+      </article>
+    </section>
+
+    <!-- Pomodoro và Apple Music -->
+    <section class="focus-grid">
+      <article class="panel focus-panel timer-card">
+        <div class="focus-heading">
+          <div>
+            <div class="focus-eyebrow">FOCUS TIME</div>
+            <h2>Pomodoro Timer</h2>
+            <p class="panel-description">Tập trung vào một việc tại một thời điểm.</p>
+          </div>
+          <img
+            class="focus-art"
+            src="https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=240&q=80"
+            alt="Phong cảnh hồ và núi"
+          >
+        </div>
+
+        <div class="timer-modes">
+          <button class="timer-mode active" data-minutes="25" type="button">
+            Tập trung
+          </button>
+          <button class="timer-mode" data-minutes="5" type="button">
+            Nghỉ ngắn
+          </button>
+          <button class="timer-mode" data-minutes="15" type="button">
+            Nghỉ dài
+          </button>
+        </div>
+
+        <div class="timer-display" id="pomodoro-time">25:00</div>
+        <div class="timer-status" id="pomodoro-status">
+          Sẵn sàng cho một phiên tập trung
+        </div>
+
+        <div class="timer-actions">
+          <button class="primary-btn" id="pomodoro-start" type="button">
+            ▶ Bắt đầu
+          </button>
+          <button class="secondary-btn" id="pomodoro-reset" type="button">
+            ↺ Đặt lại
+          </button>
+        </div>
+      </article>
+
+      <article class="panel focus-panel music-panel">
+        <div class="focus-heading">
+          <div>
+            <div class="focus-eyebrow">YOUR SOUNDTRACK</div>
+            <h2>Nhạc học tập</h2>
+            <p class="panel-description">Một chút âm nhạc, một chút cảm hứng.</p>
+          </div>
+          <img
+            class="focus-art"
+            src="https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?auto=format&fit=crop&w=240&q=80"
+            alt="Tranh nghệ thuật trong phòng tranh"
+          >
+        </div>
+
+        <iframe
+          class="music-player"
+          title="Playlist Apple Music yêu thích"
+          allow="autoplay *; encrypted-media *;"
+          frameborder="0"
+          height="350"
+          sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation"
+          src="https://embed.music.apple.com/vn/playlist/y%C3%AAu-th%C3%ADch/pl.u-MDAWkl3FAMj8omv?l=vi">
+        </iframe>
+
+        <p class="music-note">
+          Nếu nhạc chưa phát, em hãy nhấn Play trong trình phát.
+        </p>
+      </article>
+    </section>
+
+
+    <!-- Quản lý bài tập -->
+    <main class="main-grid">
+      <div class="column">
+        <section class="panel">
+          <div class="panel-heading">
+            <div>
+              <h2>Tiến độ học tập</h2>
+              <p class="panel-description">Mỗi nhiệm vụ hoàn thành là một bước tiến.</p>
+            </div>
+            <span class="tag" id="progress-percent">0%</span>
+          </div>
+
+          <div class="progress-track">
+            <div class="progress-fill" id="progress-bar"></div>
+          </div>
+
+          <div class="progress-bottom">
+            <span id="progress-message">Bắt đầu từ một nhiệm vụ nhỏ</span>
+            <span id="progress-count">0/0 bài</span>
+          </div>
+        </section>
+
+        <section class="panel">
+          <div class="panel-heading">
+            <div>
+              <h2>Danh sách nhiệm vụ</h2>
+              <p class="panel-description">Tất cả bài tập của em ở một nơi.</p>
+            </div>
+          </div>
+
+          <div class="task-tools">
+            <input
+              class="field"
+              id="task-search"
+              type="search"
+              placeholder="⌕ Tìm bài tập hoặc môn học..."
+              aria-label="Tìm bài tập"
+            >
+
+            <div class="filters" aria-label="Lọc nhiệm vụ">
+              <button class="filter-btn active" data-filter="all" type="button">Tất cả</button>
+              <button class="filter-btn" data-filter="active" type="button">Chưa xong</button>
+              <button class="filter-btn" data-filter="completed" type="button">Đã xong</button>
+            </div>
+            <div class="sort-control">
+  <label for="task-sort">Sắp xếp:</label>
+  <select class="field" id="task-sort">
+    <option value="deadline">Hạn gần nhất</option>
+    <option value="newest">Mới nhất</option>
+    <option value="completed-bottom">Việc đã xong xuống cuối</option>
+  </select>
+</div>
+          </div>
+
+          <div class="task-list" id="task-list"></div>
+        </section>
+      </div>
+
+      <div class="column">
+        <section class="panel">
+          <div class="panel-heading">
+            <div>
+              <h2>Thêm nhiệm vụ mới</h2>
+              <p class="panel-description">Ghi lại việc em cần hoàn thành.</p>
+            </div>
+            <span class="stat-icon">＋</span>
+          </div>
+
+          <form id="task-form" class="form-grid">
+            <div>
+              <label class="field-label" for="task-name">Tên nhiệm vụ</label>
+              <input
+                class="field"
+                id="task-name"
+                type="text"
+                placeholder="Ví dụ: Ôn tập Toán chương 2"
+                maxlength="160"
+                required
+              >
+            </div>
+
+            <div class="two-fields">
+              <div>
+                <label class="field-label" for="task-subject">Môn học</label>
+                <select class="field" id="task-subject">
+                  <option value="">Chọn môn</option>
+                  <option value="Toán">Toán</option>
+                  <option value="Ngữ văn">Ngữ văn</option>
+                  <option value="Tiếng Anh">Tiếng Anh</option>
+                  <option value="Vật lý">Vật lý</option>
+                  <option value="Hóa học">Hóa học</option>
+                  <option value="Sinh học">Sinh học</option>
+                  <option value="Lịch sử">Lịch sử</option>
+                  <option value="Địa lý">Địa lý</option>
+                  <option value="Tin học">Tin học</option>
+                  <option value="Khác">Khác</option>
+                </select>
+              </div>
+
+              <div>
+                <label class="field-label" for="task-deadline">Hạn hoàn thành</label>
+                <input class="field" id="task-deadline" type="date">
+              </div>
+            </div>
+
+            <button class="primary-btn" type="submit">＋ Thêm nhiệm vụ</button>
+          </form>
+        </section>
+      </div>
+    </main>
+    </section>
+
+    <section class="app-page" id="study-stats-page" hidden>
+    <!-- Thống kê thời gian học -->
+    <section class="panel" style="margin-bottom: 20px;" aria-labelledby="study-tracking-title">
+      <div class="panel-heading">
+        <div>
+          <div class="focus-eyebrow">YOUR STUDY HABITS</div>
+          <h2 id="study-tracking-title">Thống kê học tập</h2>
+          <p class="panel-description">Theo dõi thời gian em học mỗi ngày trong 7 ngày gần nhất.</p>
+        </div>
+        <span class="stat-icon">📈</span>
+      </div>
+
+      <div class="study-summary">
+        <div class="study-summary-card">
+          <div class="study-summary-label">Tổng thời gian học</div>
+          <div class="study-summary-value" id="study-week-total">0 phút</div>
+        </div>
+        <div class="study-summary-card">
+          <div class="study-summary-label">Số ngày có học</div>
+          <div class="study-summary-value" id="study-days-count">0/7 ngày</div>
+        </div>
+      </div>
+
+      <div class="study-chart-wrap">
+        <div id="study-chart-empty" class="chart-empty">
+          <div>
+            <div class="chart-empty-icon">🌱</div>
+            <strong>Chưa có dữ liệu học tập</strong>
+            <p>Ghi lại thời gian học bên dưới để bắt đầu biểu đồ nhé.</p>
+          </div>
+        </div>
+        <svg id="study-chart" class="study-chart" viewBox="0 0 700 250"
+             role="img" aria-label="Biểu đồ đường thể hiện số giờ học mỗi ngày trong 7 ngày gần nhất" hidden>
+          <g id="study-chart-grid"></g>
+          <path id="study-chart-area" class="chart-area" d=""></path>
+          <path id="study-chart-line" class="chart-line" d=""></path>
+          <g id="study-chart-points"></g>
+          <g id="study-chart-labels"></g>
+        </svg>
+      </div>
+            
+
+      <form id="study-entry-form" class="study-entry-form">
+        <div class="entry-date">
+          <label class="field-label" for="study-entry-date">Ngày học</label>
+          <input class="field" id="study-entry-date" type="date" required>
+        </div>
+        <div>
+          <label class="field-label" for="study-entry-minutes">Số phút</label>
+          <input class="field" id="study-entry-minutes" type="number" min="1" max="1440" placeholder="45" required>
+        </div>
+        <button class="primary-btn" type="submit">＋ Ghi nhận</button>
+      </form>
+
+      <div class="study-history" id="study-history"></div>
+
+      <p class="music-note">Phiên Pomodoro hoàn thành sẽ tự động được ghi. Em cũng có thể nhập tay; biểu đồ cộng tổng số phút theo ngày.</p>
+      
+    </section>
+
+    </section>
+
+
+    <footer class="footer">
+      Made for better study days · StudyTask
+    </footer>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>  
+  <script src="app.js"></script>
+  <script src="statistics.js"></script>
+</body>
+</html>
